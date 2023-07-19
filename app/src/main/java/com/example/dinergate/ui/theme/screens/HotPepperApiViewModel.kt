@@ -4,21 +4,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.dinergate.network.HotPepperApi
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
 
-/**
- * UI state for the Home screen
- */
-sealed interface HotPepperUiState {
-    data class Success(val HotPepperApiResult: String) : HotPepperUiState
-    object Error : HotPepperUiState
-    object Loading : HotPepperUiState
+class HotPepperApiViewModel : ViewModel() {
+    /** The mutable State that stores the status of the most recent request */
+    var ApiUiState: String by mutableStateOf("")
+        private set
+
+    /**
+     * Call getMarsPhotos() on init so we can display status immediately.
+     */
+    init {
+        getHotPepperApiResult()
+    }
+
+    /**
+     * Gets Mars photos information from the Mars API Retrofit service and updates the
+     * [MarsPhoto] [List] [MutableList].
+     */
+    fun getHotPepperApiResult() {
+        viewModelScope.launch {
+            val listResult = HotPepperApi.retrofitService.getData()
+            ApiUiState = listResult
+        }
+    }
 }
-

@@ -42,6 +42,7 @@ import com.google.android.gms.location.LocationServices
 
 @Composable
 fun StartScreen(
+    apiUiState: String,
     onSearchButtonClicked: () -> Unit,
     modifier: Modifier = Modifier.padding(32.dp)
 ) {
@@ -57,7 +58,8 @@ fun StartScreen(
         SearchButton(
             onClick = { onSearchButtonClicked() }
         )
-        Text(text = gpsLocation.getGpsLocation().toString())
+        //Text(text = gpsLocation.getGpsLocation().toString())
+        Text(text = apiUiState)
         Text(text = stateToQuery(
             lat = 0.0,
             lng = 0.0,
@@ -109,6 +111,8 @@ fun SearchButton(
 @Composable
 fun StartScreenPreview(){
     StartScreen(
+
+        apiUiState = "aaa",
 
         onSearchButtonClicked = {},
         modifier = Modifier.fillMaxSize().padding(16.dp)

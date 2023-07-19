@@ -48,6 +48,7 @@ fun DinerGateApp(
 
 
     val uiState by viewModel.uiState.collectAsState()
+    val apiViewModel: HotPepperApiViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -56,6 +57,7 @@ fun DinerGateApp(
 
         composable(route = DinerGateScreen.Start.name) {
             StartScreen(
+                apiUiState = apiViewModel.ApiUiState,
                 onSearchButtonClicked = {
                     navController.navigate(DinerGateScreen.SearchResult.name)
                 }
