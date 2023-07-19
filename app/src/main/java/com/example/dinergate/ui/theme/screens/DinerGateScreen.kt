@@ -46,46 +46,87 @@ fun DinerGateApp(
     navController: NavHostController = rememberNavController()
 ){
 
+    // Get current back stack entry
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    // Get the name of the current screen
+    val currentScreen = DinerGateScreen.valueOf(
+        backStackEntry?.destination?.route ?: DinerGateScreen.Start.name
+    )
 
-    val uiState by viewModel.uiState.collectAsState()
-    val apiViewModel: HotPepperApiViewModel = viewModel()
+    Scaffold(
+        topBar = {
+            DinerGateAppBar(
+                currentScreen = currentScreen,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() }
+            )
+        }
 
-    NavHost(
-        navController = navController,
-        startDestination = DinerGateScreen.Start.name
-    ) {
+    ) {innerPadding ->
+        val uiState by viewModel.uiState.collectAsState()
+        val apiViewModel: HotPepperApiViewModel = viewModel()
 
-        composable(route = DinerGateScreen.Start.name) {
-            when (apiViewModel.apiUiState) {
-                is ApiUiState.Success -> viewModel.setHotPepperApiResult((apiViewModel.apiUiState as ApiUiState.Success).data)
-                else -> {}
+        NavHost(
+            navController = navController,
+            startDestination = DinerGateScreen.Start.name,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+
+            composable(route = DinerGateScreen.Start.name) {
+                when (apiViewModel.apiUiState) {
+                    is ApiUiState.Success -> viewModel.setHotPepperApiResult((apiViewModel.apiUiState as ApiUiState.Success).data)
+                    else -> {}
+                }
+                StartScreen(
+                    hotPepperApiResult = uiState.hotPepperApiResult,
+                    onSearchButtonClicked = {
+
+                        navController.navigate(DinerGateScreen.SearchResult.name)
+                    }
+                )
             }
-            StartScreen(
-                hotPepperApiResult = uiState.hotPepperApiResult,
-                onSearchButtonClicked = {
 
-                    navController.navigate(DinerGateScreen.SearchResult.name)
-                }
-            )
-        }
+            composable(route = DinerGateScreen.SearchResult.name) {
+                SearchResultScreen(
+                    HPApiSearchResult = uiState.hotPepperApiResult,
+                    onCardClicked = {
+                        viewModel.setShopFocusIndex(it)
+                        navController.navigate(DinerGateScreen.ShopDetail.name)
+                    }
+                )
+            }
 
-        composable(route = DinerGateScreen.SearchResult.name) {
-            SearchResultScreen(
-                HPApiSearchResult = uiState.hotPepperApiResult,
-                onCardClicked = {
-                    viewModel.setShopFocusIndex(it)
-                    navController.navigate(DinerGateScreen.ShopDetail.name)
-                }
-            )
-        }
-
-        composable(route = DinerGateScreen.ShopDetail.name) {
-            ShopDetailScreen(
-                details = uiState.hotPepperApiResult.results.shop[uiState.shopFocusIndex]
-            )
+            composable(route = DinerGateScreen.ShopDetail.name) {
+                ShopDetailScreen(
+                    details = uiState.hotPepperApiResult.results.shop[uiState.shopFocusIndex]
+                )
+            }
         }
     }
+}
 
-
-
+@Composable
+fun DinerGateAppBar(
+    currentScreen: DinerGateScreen,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    TopAppBar(
+        title = { Text(text = "DinerGate - レストランを検索") },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier,
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = null
+                    )
+                }
+            }
+        }
+    )
 }
