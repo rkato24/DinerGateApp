@@ -27,11 +27,20 @@ import kotlinx.serialization.json.Json
 import android.app.Application
 import android.content.Context
 import android.location.Location
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
+import androidx.compose.material3.RadioButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 import com.example.dinergate.dummyResult
@@ -45,27 +54,48 @@ import com.google.android.gms.location.LocationServices
 fun StartScreen(
     hotPepperApiResult: HotPepperApiResult,
     onSearchButtonClicked: (HotPepperApiResult) -> Unit,
+    onSelectionChanged: (Int) -> Unit = {},
+    Id: Int,
     modifier: Modifier = Modifier.padding(32.dp)
 ) {
     val gpsLocation = GpsLocation()
 
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(text = "近くのレストランを検索します")
+        Text(text = "現在地からの検索半径を指定してください")
         //Spacer(modifier = Modifier.height(16.dp ))
+        val rangeID = listOf("300m", "500m", "1000m", "2000m", "3000m")
+        rangeID.forEachIndexed { index, item ->
+            Row(
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(index + 1)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(index + 1)
+                    }
+                )
+                Text(item)
+            }
+        }
+        Text(text = Id.toString())
         SearchButton(
             onClick = { onSearchButtonClicked(hotPepperApiResult) }
         )
         //Text(text = gpsLocation.getGpsLocation().toString())
-        Text(text = hotPepperApiResult.toString())
-        Text(text = stateToQuery(
-            lat = 0.0,
-            lng = 0.0,
-            range = 5
-        ))
     }
 
 }
@@ -116,7 +146,11 @@ fun StartScreenPreview(){
         hotPepperApiResult = dummyResult,
 
         onSearchButtonClicked = {},
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        onSelectionChanged = {},
+        Id = 3,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     )
 
 }

@@ -82,7 +82,9 @@ fun DinerGateApp(
                     onSearchButtonClicked = {
 
                         navController.navigate(DinerGateScreen.SearchResult.name)
-                    }
+                    },
+                    onSelectionChanged = { viewModel.setRangeId(it) },
+                    Id = uiState.rangeId
                 )
             }
 

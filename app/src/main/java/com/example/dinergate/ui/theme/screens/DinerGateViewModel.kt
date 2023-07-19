@@ -33,4 +33,13 @@ class DinerGateViewModel: ViewModel() {
         }
     }
 
+    fun setRangeId(id: Int) {
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                rangeId = id
+            )
+        }
+    }
+
 }
