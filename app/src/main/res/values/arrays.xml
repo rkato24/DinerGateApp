@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="rangeSpinnerItems">
+        <item>"300m"</item>
+        <item>"500m"</item>
+        <item>"1000m"</item>
+        <item>"2000m"</item>
+        <item>"3000m"</item>
+    </array>
+</resources>
+
