@@ -9,9 +9,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import retrofit2.Retrofit
 
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 private const val BASE_URL =
-    "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+    "https://webservice.recruit.co.jp/hotpepper/"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -20,9 +21,16 @@ private val retrofit = Retrofit.Builder()
 
 interface HotPepperApiService {
 
-    @GET("?key=baf926709d928da3&lat=34.84&lng=135.79&range=5&order=4&format=json")
+    @GET("gourmet/v1/")
     //@GET(apiQuery)
-    suspend fun getData(): HotPepperApiResult
+    suspend fun getData(
+        @Query("key") key: String = "baf926709d928da3",
+        @Query("lat") lat: Double = 34.67,
+        @Query("lng") lng: Double = 135.52,
+        @Query("range") range: Int = 5,
+        @Query("order") order: Int = 4,
+        @Query("format") format: String = "json"
+    ): HotPepperApiResult
 }
 
 object HotPepperApi {
