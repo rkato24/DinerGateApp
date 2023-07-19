@@ -14,6 +14,9 @@ import retrofit2.http.Query
 private const val BASE_URL =
     "https://webservice.recruit.co.jp/hotpepper/"
 
+private const val API_KEY =
+    "baf926709d928da3"
+
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
@@ -24,7 +27,7 @@ interface HotPepperApiService {
     @GET("gourmet/v1/")
     //@GET(apiQuery)
     suspend fun getData(
-        @Query("key") key: String = "baf926709d928da3",
+        @Query("key") key: String = API_KEY,
         @Query("lat") lat: Double = 34.67,
         @Query("lng") lng: Double = 135.52,
         @Query("range") range: Int = 5,
