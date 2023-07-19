@@ -71,7 +71,7 @@ fun DinerGateApp(
 
         composable(route = DinerGateScreen.SearchResult.name) {
             SearchResultScreen(
-                HPApiSearchResult = dummyResult,
+                HPApiSearchResult = uiState.hotPepperApiResult,
                 onCardClicked = {
                     viewModel.setShopFocusIndex(it)
                     navController.navigate(DinerGateScreen.ShopDetail.name)
@@ -81,7 +81,7 @@ fun DinerGateApp(
 
         composable(route = DinerGateScreen.ShopDetail.name) {
             ShopDetailScreen(
-                details = dummyResult.results.shop[uiState.shopFocusIndex]
+                details = uiState.hotPepperApiResult.results.shop[uiState.shopFocusIndex]
             )
         }
     }
