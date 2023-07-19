@@ -45,7 +45,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 import com.example.dinergate.dummyResult
 import com.example.dinergate.network.GpsLocation
-import com.example.dinergate.network.stateToQuery
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
