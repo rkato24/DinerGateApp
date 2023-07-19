@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
+import com.example.dinergate.dummyResult
 import com.example.dinergate.network.GpsLocation
 import com.example.dinergate.network.stateToQuery
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -42,8 +43,8 @@ import com.google.android.gms.location.LocationServices
 
 @Composable
 fun StartScreen(
-    apiUiState: String,
-    onSearchButtonClicked: () -> Unit,
+    hotPepperApiResult: HotPepperApiResult,
+    onSearchButtonClicked: (HotPepperApiResult) -> Unit,
     modifier: Modifier = Modifier.padding(32.dp)
 ) {
     val gpsLocation = GpsLocation()
@@ -56,10 +57,10 @@ fun StartScreen(
         Text(text = "近くのレストランを検索します")
         //Spacer(modifier = Modifier.height(16.dp ))
         SearchButton(
-            onClick = { onSearchButtonClicked() }
+            onClick = { onSearchButtonClicked(hotPepperApiResult) }
         )
         //Text(text = gpsLocation.getGpsLocation().toString())
-        Text(text = apiUiState)
+        Text(text = hotPepperApiResult.toString())
         Text(text = stateToQuery(
             lat = 0.0,
             lng = 0.0,
@@ -112,7 +113,7 @@ fun SearchButton(
 fun StartScreenPreview(){
     StartScreen(
 
-        apiUiState = "aaa",
+        hotPepperApiResult = dummyResult,
 
         onSearchButtonClicked = {},
         modifier = Modifier.fillMaxSize().padding(16.dp)

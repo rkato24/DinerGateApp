@@ -56,9 +56,14 @@ fun DinerGateApp(
     ) {
 
         composable(route = DinerGateScreen.Start.name) {
+            when (apiViewModel.apiUiState) {
+                is ApiUiState.Success -> viewModel.setHotPepperApiResult((apiViewModel.apiUiState as ApiUiState.Success).data)
+                else -> {}
+            }
             StartScreen(
-                apiUiState = apiViewModel.apiUiState,
+                hotPepperApiResult = uiState.hotPepperApiResult,
                 onSearchButtonClicked = {
+
                     navController.navigate(DinerGateScreen.SearchResult.name)
                 }
             )
