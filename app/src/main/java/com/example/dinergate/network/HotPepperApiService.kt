@@ -19,7 +19,9 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface HotPepperApiService {
+
     @GET("?key=baf926709d928da3&lat=34.84&lng=135.79&range=5&order=4&format=json")
+    //@GET(apiQuery)
     suspend fun getData(): HotPepperApiResult
 }
 
