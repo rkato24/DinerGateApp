@@ -5,7 +5,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
 private const val BASE_URL =
-    "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=baf926709d928da3&lat=34.67&lng=135.52&range=5&order=4&format=json"
+    "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
 
 
 private val retrofit = Retrofit.Builder()
@@ -14,7 +14,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface HotPepperApiService {
-    @GET
+    @GET("?key=baf926709d928da3&lat=34.67&lng=135.52&range=5&order=4&format=json")
     suspend fun getData(): String
 }
 
