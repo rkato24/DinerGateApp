@@ -1,0 +1,1 @@
+#　DinerGateApp 簡易仕様書
