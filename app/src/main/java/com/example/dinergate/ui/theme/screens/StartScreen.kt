@@ -66,6 +66,7 @@ fun StartScreen(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Text(text = "Welcome to DinerGate")
         Text(text = "近くのレストランを検索します")
         Text(text = "現在地からの検索半径を指定してください")
         //Spacer(modifier = Modifier.height(16.dp ))
