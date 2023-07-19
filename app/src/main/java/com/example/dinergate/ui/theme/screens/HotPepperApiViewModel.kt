@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class HotPepperApiViewModel : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
-    var ApiUiState: String by mutableStateOf("")
+    var apiUiState: String by mutableStateOf("")
         private set
 
     /**
@@ -27,7 +27,7 @@ class HotPepperApiViewModel : ViewModel() {
     fun getHotPepperApiResult() {
         viewModelScope.launch {
             val listResult = HotPepperApi.retrofitService.getData()
-            ApiUiState = listResult
+            apiUiState = listResult.results.shop[0].name
         }
     }
 }

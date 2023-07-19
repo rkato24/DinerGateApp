@@ -57,7 +57,7 @@ fun DinerGateApp(
 
         composable(route = DinerGateScreen.Start.name) {
             StartScreen(
-                apiUiState = apiViewModel.ApiUiState,
+                apiUiState = apiViewModel.apiUiState,
                 onSearchButtonClicked = {
                     navController.navigate(DinerGateScreen.SearchResult.name)
                 }
