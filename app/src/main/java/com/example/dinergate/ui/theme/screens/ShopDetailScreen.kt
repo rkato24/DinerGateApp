@@ -42,8 +42,8 @@ ShopDetailScreen : 店舗詳細画面を表示するコンポ―ザブル
 fun ShopDetailScreen(
     modifier: Modifier = Modifier,
     details: Shop,
-    lat: Double = 34.8424,
-    lng: Double = 135.7895
+    lat: Double,
+    lng: Double
 ) {
     LazyColumn(
         modifier = modifier
@@ -62,18 +62,20 @@ fun ShopDetailScreen(
         item{
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-            )
-            AsyncImage(
-                model = ImageRequest.Builder(context = LocalContext.current)
-                    .data(details.photo.mobile.l)
-                    .build(),
-                contentDescription = stringResource(R.string.shopPhoto),
-                modifier = modifier
-                    .size(400.dp)
-                    .padding(4.dp)
-                    .fillMaxWidth()
-            )
+                    .clip(RoundedCornerShape(64.dp))
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(details.photo.mobile.l)
+                        .build(),
+                    contentDescription = stringResource(R.string.shopPhoto),
+                    modifier = modifier
+                        .size(400.dp)
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                )
+            }
+            
         }
         item{
             Text(
