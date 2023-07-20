@@ -34,8 +34,8 @@ val rangeId: Int = 3
 data class DinerGateUiState (
     val hotPepperApiResult: HotPepperApiResult = dummyResult,
     val shopFocusIndex: Int = 0,
-    val currentLatitude: Double = 34.8424,
-    val currentLongitude: Double = 135.7895,
+    val currentLatitude: Double = 0.0,
+    val currentLongitude: Double = 0.0,
     val rangeId: Int = 3
 )
 
