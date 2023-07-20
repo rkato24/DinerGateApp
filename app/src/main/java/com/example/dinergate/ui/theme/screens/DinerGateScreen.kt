@@ -65,6 +65,7 @@ fun DinerGateApp(
     ) {innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
         val apiViewModel: HotPepperApiViewModel = viewModel()
+        apiViewModel.getHotPepperApiResult( lat = 34.8424, lng = 135.7895 )
 
         NavHost(
             navController = navController,
@@ -75,7 +76,10 @@ fun DinerGateApp(
             composable(route = DinerGateScreen.Start.name) {
                 when (apiViewModel.apiUiState) {
                     is ApiUiState.Success -> viewModel.setHotPepperApiResult((apiViewModel.apiUiState as ApiUiState.Success).data)
-                    else -> {}
+                    is ApiUiState.Loading -> {}
+                    is ApiUiState.Error -> {
+                        Text(text = "失敗しました")
+                    }
                 }
                 StartScreen(
                     hotPepperApiResult = uiState.hotPepperApiResult,

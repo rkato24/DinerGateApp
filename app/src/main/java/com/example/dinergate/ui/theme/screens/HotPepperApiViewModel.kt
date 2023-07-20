@@ -16,7 +16,7 @@ sealed interface ApiUiState {
     object Loading : ApiUiState
 }
 
-class HotPepperApiViewModel : ViewModel() {
+class HotPepperApiViewModel() : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
     var apiUiState: ApiUiState by mutableStateOf(ApiUiState.Loading)
         private set
@@ -24,18 +24,22 @@ class HotPepperApiViewModel : ViewModel() {
     /**
      * Call getMarsPhotos() on init so we can display status immediately.
      */
-    init {
-        getHotPepperApiResult()
-    }
 
     /**
      * Gets Mars photos information from the Mars API Retrofit service and updates the
      * [MarsPhoto] [List] [MutableList].
      */
-    fun getHotPepperApiResult() {
+    fun getHotPepperApiResult(
+        lat: Double = 34.67,
+        lng: Double = 135.5,
+        range: Int = 5,
+        order: Int = 4
+    ) {
         viewModelScope.launch {
             apiUiState = try {
-                val listResult = HotPepperApi.retrofitService.getData()
+                val listResult = HotPepperApi.retrofitService.getData(
+                    lat = lat,
+                    lng = lng )
                 ApiUiState.Success(listResult)
             } catch (e: IOException) {
                 ApiUiState.Error
