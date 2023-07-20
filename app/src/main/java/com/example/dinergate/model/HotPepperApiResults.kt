@@ -3,6 +3,13 @@ package com.example.dinergate.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/*
+
+HotPepperApiResult :
+グルメサーチAPIから得た文字列を、json形式として保持することができるデータクラス
+
+ */
+
 @Serializable
 data class HotPepperApiResult(
     val results: Results
