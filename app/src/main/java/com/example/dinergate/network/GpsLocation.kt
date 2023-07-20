@@ -16,6 +16,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
+/*
+
+GpsLocation : 位置情報の権限のリクエスト、緯度経度の取得を行う。
+参考：
+https://akira-watson.com/android/kotlin/gps-simple.html
+https://developer.android.com/training/permissions/requesting?hl=ja
+https://developer.android.com/training/location/permissions?hl=ja
+http://www.dicre.com/android/location.html
+
+ */
+
 
 class GpsLocation : AppCompatActivity(), LocationListener {
 
