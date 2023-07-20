@@ -14,6 +14,7 @@ private const val BASE_URL =
 
 private const val API_KEY =
     ""
+//実行の際はAPI_KEYにAPIキーを設定する
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
